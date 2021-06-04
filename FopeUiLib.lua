@@ -5,7 +5,7 @@ local listOffset = {}
 local windows = {}
 local pastSliders = {}
 local dropdowns = {}
-local dropdownSizes {}
+local dropdownSizes = {}
 local destroyed
 
 local colorPickers = {}
