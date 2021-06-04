@@ -11,12 +11,12 @@ local destroyed
 local colorPickers = {}
 
 if game.CoreGui:FindFirstChild('FopeUiLib') then
-	game.CoreGui:FindFirstChild('FopeUiLib'):Destroy()
-	destroyed = true
+    game.CoreGui:FindFirstChild('FopeUiLib'):Destroy()
+    destroyed = true
 end
 
 function Lerp(a, b, c)
-	return a + ((b - a) * c)
+    return a + ((b - a) * c)
 end
 
 local players = game:service('Players');
@@ -26,23 +26,23 @@ local run = game:service('RunService');
 local stepped = run.Stepped;
 function Dragify(obj)
 	spawn(function()
-			local minitial;
-			local initial;
-			local isdragging;
-		obj.InputBegan:Connect(function(input)
-					if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
-							isdragging = true;
-							minitial = input.Position;
-							initial = obj.Position;
-							local con;
-			con = stepped:Connect(function()
-							if isdragging then
-											local delta = Vector3.new(mouse.X, mouse.Y, 0) - minitial;
-											obj.Position = UDim2.new(initial.X.Scale, initial.Y.Offset + delta.X, initial.Y.Scale, initial.Y.Offset + delta.Y);
-									else
-											con:Disconnect();
-									end;
-			end);
+		local minitial;
+		local initial;
+		local isdragging;
+	    obj.InputBegan:Connect(function(input)
+			if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+				isdragging = true;
+				minitial = input.Position;
+				initial = obj.Position;
+				local con;
+                con = stepped:Connect(function()
+        			if isdragging then
+						local delta = Vector3.new(mouse.X, mouse.Y, 0) - minitial;
+						obj.Position = UDim2.new(initial.X.Scale, initial.X.Offset + delta.X, initial.Y.Scale, initial.Y.Offset + delta.Y);
+					else
+						con:Disconnect();
+					end;
+                end);
                 input.Changed:Connect(function()
     			    if input.UserInputState == Enum.UserInputState.End then
 					    isdragging = false;
@@ -53,14 +53,15 @@ function Dragify(obj)
 end)
 end
 
--- Instances for protection so @JPG#6968 doesn't get banned :
+-- Instances:
 
-local function protect_gui(obj)
+local function protect_gui(obj) 
 if destroyed then
-	obj.Parent = game.CoreGui
-	return
+   obj.Parent = game.CoreGui
+   return
 end
 if syn and syn.protect_gui then
+syn.protect_gui(obj)
 obj.Parent = game.CoreGui
 elseif PROTOSMASHER_LOADED then
 obj.Parent = get_hidden_gui()
@@ -81,47 +82,47 @@ local uis = game:GetService("UserInputService")
 local keybindConnection
 
 function library:Destroy()
-	FopeUiLib:Destroy()
-	if keybindConnection then
-		keybindConnection:Disconnect()
-	end
+    FopeUiLib:Destroy()
+    if keybindConnection then
+        keybindConnection:Disconnect()
+    end
 end
 function library:Keybind(key)
-	if keybindConnection then keybindConnection;Disconnect() end
+    if keybindConnection then keybindConnection:Disconnect() end
 
-	keybindConnection = uis.InputBegan:Connect(function(input, gp)
-		if not gp and input.KeyCode == Enum.KeyCode[key] then
-			FopeUiLib.Enabled = not FopeUiLib.Enabled
-		end
-	end)
+    keybindConnection = uis.InputBegan:Connect(function(input, gp)
+        if not gp and input.KeyCode == Enum.KeyCode[key] then
+            FopeUiLib.Enabled = not FopeUiLib.Enabled
+        end
+    end)
 end
 
-function library:Window(name)
-	windowCount = windowCount + 1
-	local winCount = windowCount
-	local zindex = winCount * 7
-	local UiWindow = Instance.new("Frame")
+function library:Window(name) 
+    windowCount = windowCount + 1
+    local winCount = windowCount
+    local zindex = winCount * 7
+    local UiWindow = Instance.new("Frame")
 
-	UiWindow.Name = "UiWindow"
-	UiWindow.Parent = FopeUiLib
-	UiWindow.BackgroundColor3 = Color3.fromRGB(13, 21, 135)
-	UiWindow.BorderColor3 = Color3.fromRGB(13, 21, 135)
-	UiWindow.Position = UDim2.new(0, xOffset, 0, 20)
-	UiWindow.Size = UDim2.new(0, 207, 0, 33)
-	UiWindow.ZIndex = 4 + zindex
-	UiWindow.Active = true
-	Dragify(UiWindow)
+    UiWindow.Name = "UiWindow"
+    UiWindow.Parent = FopeUiLib
+    UiWindow.BackgroundColor3 = Color3.fromRGB(0, 151, 230)
+    UiWindow.BorderColor3 = Color3.fromRGB(0, 151, 230)
+    UiWindow.Position = UDim2.new(0, xOffset, 0, 20)
+    UiWindow.Size = UDim2.new(0, 207, 0, 33)
+    UiWindow.ZIndex = 4 + zindex
+    UiWindow.Active = true
+    Dragify(UiWindow)
 
-	xOffset = xOffset + 230
+    xOffset = xOffset + 230
 
-	local Header = Instance.new("Frame")
-	Header.Name = "Header"
-	Header.Parent = UiWindow
-	Header.BackgroundColor3 = Color3.fromRGB(0, 151, 230)
-	Header.BorderColor3 = Color3.fromRGB(0, 151, 230)
-	Header.Position = UDim2.new(0, 0, -0.020544238, 0)
-	Header.Size = UDim2.new(0, 207, 0, 26)
-	Header.ZIndex = 5 + zindex
+    local Header = Instance.new("Frame")
+    Header.Name = "Header"
+    Header.Parent = UiWindow
+    Header.BackgroundColor3 = Color3.fromRGB(0, 168, 255)
+    Header.BorderColor3 = Color3.fromRGB(0, 168, 255)
+    Header.Position = UDim2.new(0, 0, -0.0202544238, 0)
+    Header.Size = UDim2.new(0, 207, 0, 26)
+    Header.ZIndex = 5 + zindex
 
     local HeaderText = Instance.new("TextLabel")
     HeaderText.Name = "HeaderText"
